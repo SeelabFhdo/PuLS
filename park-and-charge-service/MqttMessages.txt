@@ -1,0 +1,38 @@
+Topic: SCSlora
+{
+    "parkingSensorId" : "CP_3-ParkingSensor",
+    "timestamp" : "2021-08-12T10:51:30",
+    "status" : "USED"
+}
+
+Topic: PulsCPISensors/charging
+{
+    "chargingPointId" : "CS_SGTL-CP_3",
+    "status" : 1,
+    "current_L1" : 11,
+    "current_L2" : 12,
+    "current_L3" : 13,
+    "voltage_L1" : 21,
+    "voltage_L2" : 22,
+    "voltage_L3" : 23,
+    "current_limit" : 222,
+    "timestamp" : "2021-08-12T06:57:11.395Z"
+}
+
+Topic: PulsCPISensors/status
+{
+    "chargingPointId" : "CS_SGTL-CP_3",
+    "chargedEnergy" : 23,
+    "current_limit" : 222,
+    "status" : 1,
+    "timestamp" : "2021-08-12T06:57:11.395Z",
+    "chargingDuration" : 30
+}
+
+Topic: PulsCPISensors/keepalive
+{
+    "chargingPointId" : "CS_SGTL-CP_3",
+    "timestamp" : "2021-08-12T06:57:11.395Z",
+    "status" : 1,
+    "gridstate" : 2
+}

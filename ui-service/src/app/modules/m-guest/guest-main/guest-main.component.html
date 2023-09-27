@@ -1,0 +1,13 @@
+<div class="sidebar">
+    <router-outlet></router-outlet>
+</div>
+<div class="outer-map-container">
+    <app-leaflet-map
+        class="no-border"
+        [initialLocation]="location"
+        [initialZoomLevel]="12"
+        [maxZoomLevel]="19"
+        [tileProvider]="'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'"
+        (onMapReady)="onLeafletMapReady($event)"
+    ></app-leaflet-map>
+</div>

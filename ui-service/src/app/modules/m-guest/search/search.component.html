@@ -1,0 +1,186 @@
+<ng-container *transloco="let t">
+
+<div class="title">
+    <span class="mat-display-1">{{t('guest-search.question')}}</span>
+</div>
+
+<form [formGroup]="searchForm" class="search-form">
+
+        <label for="destination" class="sr-only">{{t('guest-search.labels.destination')}}}</label>
+        <input
+            matInput
+            type="text"
+            class="input"
+            #destination
+            placeholder="{{t('guest-search.labels.destination')}}"
+            formControlName="destination"
+            (keyup)="onDestinationKeyInput()"
+            [matAutocomplete]="auto"
+        />
+        <mat-autocomplete 
+            #auto="matAutocomplete" 
+            [displayWith]="optionDisplayName" 
+            (optionSelected)="onDestinationSelected($event.option.value)">
+                <mat-option *ngFor="let option of destOptions" [value]="option">
+                    {{option.display_name}}
+                </mat-option>
+        </mat-autocomplete>
+        <small
+            *ngIf="searchForm.controls.destination.invalid && submitted"
+            class="invalid-feedback"
+        >
+            {{t('guest-search.errors.destination')}}
+        </small>
+
+        <div *ngIf="selectedDestination">
+            <label for="radius" class="sr-only">Radius</label>
+            <select id="radius" class="input" style="width: 100%;" (change)="updateMapRadiusDisplay($event.target.value)">
+                <option value="" selected>{{t('guest-search.labels.radius')}}</option>
+                <option *ngFor="let option of radiusOptions">{{option}} km</option>
+            </select>
+        </div>
+
+        <div *ngIf="radius > 0">
+            <label for="parkingSpaceType" class="sr-only">Parkingspace Type</label>
+            <select #pstItem id="parkingSpaceType" class="input" style="width: 100%;" (change)="updateParkingSpaceTypeDisplay(pstItem.value)">
+                <option value="" selected>{{t('guest-search.labels.type')}}</option>
+                <option *ngFor="let option of parkingSpaceTypeOptions" [value]="option.value">{{option.label}}</option>
+            </select>
+        </div>
+
+        <div *ngIf="parkingSpaceType == 'ev-electrified'">
+            <label for="plugType" class="sr-only">Plug Type</label>
+            <select #ptItem id="plugType" class="input" style="width: 100%;" (change)="updatePlugTypeDisplay(ptItem.value)">
+                <option value="" selected>{{t('guest-search.labels.plugtype')}}</option>
+                <option *ngFor="let option of plugTypeOptions" [value]="option.value">{{option.label}}</option>
+            </select>
+        </div>
+
+        <div *ngIf="selectedDestination && radius > 0 && (parkingSpaceType == 'none' || (plugType && parkingSpaceType == 'ev-electrified'))">
+            <div class="time-row">
+                <label for="fromdate">{{t('guest-search.labels.from')}}</label>
+                <mat-form-field class="custom-form-field datepicker-form-field">
+                    <input formControlName="fromdate" [min]="currentDate" name="fromdate" matInput [matDatepicker]="fromdate" #frominput readonly />
+                    <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                    <mat-datepicker #fromdate></mat-datepicker>
+                </mat-form-field>
+                <div class="timepicker">
+                    <ngx-timepicker-field formControlName="fromtime" [controlOnly]="true" [format]="24" [defaultTime]="currentTime" #fromtime></ngx-timepicker-field>
+                </div>
+            </div>
+        
+            <div class="time-row">
+                <label for="todate">{{t('guest-search.labels.until')}}</label>
+                <mat-form-field class="custom-form-field datepicker-form-field">
+                    <input matInput formControlName="todate" [min]="frominput.value" name="todate" [matDatepicker]="todate" #toinput readonly />
+                    <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                    <mat-datepicker #todate></mat-datepicker>
+                </mat-form-field>
+                <div class="timepicker">
+                    <ngx-timepicker-field formControlName="totime" [controlOnly]="true" [format]="24" [defaultTime]="futureDefault" #totime></ngx-timepicker-field>
+                </div>
+            </div>
+        </div>
+
+        <a *ngIf="selectedDestination && radius > 0 && (parkingSpaceType == 'none' || (plugType && parkingSpaceType == 'ev-electrified'))" 
+            mat-flat-button color="accent" (click)="onSubmit()">
+            {{t('guest-search.buttons.submit')}}
+        </a>
+
+    <div class="time-row">
+        
+    </div>
+</form>
+
+</ng-container>
+
+<!--
+<div class="title">
+    <span class="mat-display-1">{{t('guest-search.question')}}</span>
+</div>
+<form [formGroup]="searchForm" class="search-form">
+    <label for="destination" class="sr-only">{{t('guest-search.labels.destination')}}}</label>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateMapLocation($event.option.value)">
+        <mat-option *ngFor="let option of options | async" [value]="option.display_name">
+            {{option.display_name}}
+        </mat-option>
+    </mat-autocomplete>
+    <input
+        type="text"
+        class="input"
+        #destination
+        placeholder="{{t('guest-search.labels.destination')}}"
+        formControlName="destination"
+        [matAutocomplete]="auto"
+        (keydown)="updateOptions()"
+        required
+    />
+    <small
+        *ngIf="searchForm.controls.destination.invalid && submitted"
+        class="invalid-feedback"
+    >
+        {{t('guest-search.errors.destination')}}
+    </small>
+    <label for="radius" class="sr-only">Radius</label>
+    <select class="input" formControlName="radius" (change)="updateMapRadius($event.target.value)">
+        <option value="">{{t('guest-search.labels.radius')}}</option>
+        <option *ngFor="let option of radiusOptions">{{option}}</option>
+    </select>
+    <small
+        *ngIf="searchForm.controls.radius.errors?.required && submitted"
+        class="invalid-feedback"
+    >
+        {{t('guest-search.errors.radius')}}
+    </small>
+
+    <div class="time-row">
+        <label for="fromdate">{{t('guest-search.labels.from')}}</label>
+        <mat-form-field class="custom-form-field datepicker-form-field">
+            <input formControlName="fromdate" [min]="currentDate" name="fromdate" matInput [matDatepicker]="fromdate" #frominput readonly />
+            <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+            <mat-datepicker #fromdate></mat-datepicker>
+        </mat-form-field>
+        <div class="timepicker">
+            <ngx-timepicker-field formControlName="fromtime" [controlOnly]="true" [format]="24" [defaultTime]="currentTime" #fromtime></ngx-timepicker-field>
+        </div>
+    </div>
+
+    <div class="time-row">
+        <label for="todate">{{t('guest-search.labels.until')}}</label>
+        <mat-form-field class="custom-form-field datepicker-form-field">
+            <input matInput formControlName="todate" [min]="frominput.value" name="todate" [matDatepicker]="todate" #toinput readonly />
+            <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+            <mat-datepicker #todate></mat-datepicker>
+        </mat-form-field>
+        <div class="timepicker">
+            <ngx-timepicker-field formControlName="totime" [controlOnly]="true" [format]="24" [defaultTime]="futureDefault" #totime></ngx-timepicker-field>
+        </div>
+    </div>
+    <small *ngIf="submitted" class="invalid-feedback">
+        <ng-container *ngIf="searchForm.errors?.range">
+            {{t('')}}
+        </ng-container>
+    </small>
+
+    <mat-slide-toggle formControlName="electric" color="accent" #toggle>{{t('guest-search.labels.EV')}}</mat-slide-toggle>
+    <div class="car-row" [hidden]="!toggle.checked">
+        <select class="input" formControlName="plugtype" id="plugselect">
+            <option selected value="">{{t('guest-search.labels.plugtype')}}</option>
+            <option *ngFor="let type of plugTypes">{{type}}</option>
+        </select>
+        <small>
+            {{t('guest-search.labels.plugnote')}}
+        </small>
+    </div>
+    <small
+        *ngIf="searchForm.errors?.plugRequired && submitted"
+        class="invalid-feedback"
+    >
+        {{t('guest-search.errors.plugtype')}}
+    </small>
+
+    <a mat-flat-button color="accent" (click)="onSubmit()">{{t('guest-search.buttons.submit')}}</a>
+</form>
+
+</ng-container>
+-->

@@ -1,0 +1,33 @@
+<div class="charging-spinner-container" [ngStyle]="{ 'width': componentSize }">
+
+    <div *ngIf="status === 'STATUS1'">
+        <img class="evCarImg" src="../../../../assets/graphics/evCar.png" alt="vehicle is parking" />
+        <div style="margin-left: 36%; font-size: 0.9em; font-weight: bold;">Parking</div>
+        <div class="loader_no_anim" style="overflow: hidden; margin-top: -50%;"></div>
+    </div>
+
+    <div *ngIf="status === 'STATUS2'">
+        <img class="evCarPluggedImg" src="../../../../assets/graphics/evCarPlugged.png" alt="ev is plugged in" />
+        <div style="margin-left: 30%; font-size: 0.9em; font-weight: bold;">Connected</div>
+        <div class="loader_no_anim" style="overflow: hidden; margin-top: -50%;"></div>
+    </div>
+
+    <div *ngIf="status === 'STATUS3'">
+        <img class="evCarPluggedImg" src="../../../../assets/graphics/evCarPlugged.png" alt="ev is plugged in" />
+        <div style="margin-left: 30%; font-size: 0.9em; font-weight: bold;">Charging...</div>
+        <div class="loader" style="overflow: hidden; margin-top: -50%;"></div>
+    </div>
+
+    <div *ngIf="status === 'STATUS4'">
+        <img class="evCarImgGhost" src="../../../../assets/graphics/evCar.png" alt="no vehicle avail" />
+        <div style="margin-left: 38%; font-size: 0.9em; font-weight: bold;">Empty</div> <!-- either <value>kwh if last vehicle was ev or empty -->
+        <div class="loader_no_anim" style="overflow: hidden; margin-top: -50%;"></div>
+    </div>
+
+    <div *ngIf="status === 'STATUS5'">
+        <img class="evCarImgGhost" src="../../../../assets/graphics/evCar.png" alt="no vehicle avail" />
+        <div style="margin-left: 40%; font-size: 0.9em; font-weight: bold; color: red;">Error.</div>
+        <div class="loader_no_anim" style="overflow: hidden; margin-top: -50%;"></div>
+    </div>
+
+</div>

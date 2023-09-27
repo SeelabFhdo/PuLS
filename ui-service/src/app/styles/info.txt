@@ -1,0 +1,4 @@
+The styles directory is used to store the main scss style sheets for the application.
+ It can contain themes, Bootstrap, Angular Material, and any other styles.
+styles.scss should contain @import statements for all global application 
+scss files.

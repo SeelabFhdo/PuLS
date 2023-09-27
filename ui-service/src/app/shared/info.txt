@@ -1,0 +1,5 @@
+The shared directory contains classes and resources which are used in 
+more than one dynamically loaded module. By always loading with the 
+application the shared components are ready whenever a module requests them.
+It also contains (models/entities) and services (repositories) for data 
+consumed by the application.

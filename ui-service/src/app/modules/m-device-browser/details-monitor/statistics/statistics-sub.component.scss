@@ -1,0 +1,123 @@
+
+.evStationLabel {
+    display: block;
+    margin-top: 1%;
+    text-align: center;
+}
+
+.evStationGaugeLabel {
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.gaugeContainer {
+    width: 100%;
+}
+
+.evStationEnergyGauge {
+    position: absolute;
+    top: 24%;
+    left: 3%;
+}
+
+.evStationGaugeCL1 {
+    position: absolute;
+    top: 10%;
+    left: 30%;
+}
+
+.evStationGaugeCL2 {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+}
+
+.evStationGaugeCL3 {
+    position: absolute;
+    top: 70%;
+    left: 30%;
+}
+
+.evStationGaugeVL1 {
+    position: absolute;
+    top: 10%;
+    left: 56%;
+}
+
+.evStationGaugeVL2 {
+    position: absolute;
+    top: 40%;
+    left: 56%;
+}
+
+.evStationGaugeVL3 {
+    position: absolute;
+    top: 70%;
+    left: 56%;
+}
+
+.aliveChip {
+    border: 1px solid gray;
+    color: black;
+    position: absolute;
+    top: 10%;
+    left: 44%;
+}
+
+.evStationImg {
+    background-image: url("../../../../../assets/graphics/evstation60.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    //background-size: 80%;
+}
+
+.progress-margin {
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: #cfe7cf;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #ff6666;
+}
+
+.center-bold-text-top-aligned {
+    text-align: center; 
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.left-bold-text-middle-aligned {
+    text-align: left; 
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.text-box-rounded {
+    //background: whitesmoke;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-top: 2%;
+    font-size: 0.9vw;
+}
+
+table.center {
+    margin-top: 2%;
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+table.border-spacing {
+    border-spacing: 0;
+}
+
+/*
+tr, td {
+    border: 1px dotted red;
+}
+*/

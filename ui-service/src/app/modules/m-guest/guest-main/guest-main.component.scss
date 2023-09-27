@@ -1,0 +1,17 @@
+@import 'src/app/styles/variables';
+
+.sidebar {
+    position: relative;
+    width: $guest-sidebar-width;
+    height: calc(100vh - #{$topbar});
+    background-color: $darkgray;
+    z-index: 1000;
+    box-shadow: 0 3px 9px 3px rgba(0,0,0,.5);
+}
+
+.outer-map-container {
+    left: $guest-sidebar-width;
+    top: 0;
+    width: calc(100% - #{$guest-sidebar-width});
+    height: 100%;
+}

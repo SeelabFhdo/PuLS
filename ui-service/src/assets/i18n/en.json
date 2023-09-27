@@ -1,0 +1,232 @@
+{
+    "common": {
+        "yes": "yes",
+        "no": "no"
+    },
+    "sidenav": {
+        "buttons": {
+            "search": "Search",
+            "parkingSpaces": "Parking Spaces",
+            "pollutionSensorUnits": "Pollution Sensor Units",
+            "users": "Users",
+            "itemManagement": "Item Management"
+        }
+    },
+    "toolbar": {
+        "lang": {
+            "en": "EN",
+            "en_full": "English",
+            "de": "DE",
+            "de_full": "German"
+        },
+        "userMenu": {
+            "settings": "Settings",
+            "ownBookings": "Own Bookings",
+            "offerSpace": "Offer your space",
+            "logOut": "Log Out"
+        }
+    },
+    "device-browser": {
+        "details-monitor": {
+            "psu": {
+                "tabs": {
+                    "telemetry": "Environment Telemetry"
+                }
+            },
+            "ev": {
+                "tabs": {
+                    "overview": "Parking Space Overview",
+                    "statistics": "Telemetry and Statistics"
+                },
+                "overviewPanels": {
+                    "id": "Owner ID",
+                    "size": "Parking Space Size",
+                    "price": "Parking Price Per Hour",
+                    "address": "Address",
+                    "blocked": {
+                        "label": "Blocked?",
+                        "yes": "Occupied",
+                        "no": "Clear"
+                    },
+                    "offered": {
+                        "label": "Offered?",
+                        "yes": "Offered",
+                        "no": "Available"
+                    },
+                    "evStationDetails": {
+                        "label": "EV Station Details",
+                        "priceKw": "Price per KWh",
+                        "type": "Charging Type",
+                        "plug": "Plug Type"
+                    },
+                    "availPeriod": {
+                        "label": "Availability Periods",
+                        "period": "Availability Period",
+                        "from": "From",
+                        "to": "To"
+                    }
+                }
+            }
+        },
+        "details": {
+            "statusValue": {
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "status": "Status",
+            "location": "Location",
+            "buttons": {
+                "viewOnMap": "View on Map"
+            }
+        },
+        "list": {
+            "psu": {
+                "title": "Pollution Sensor Units",
+                "table": {
+                    "id": "ID",
+                    "title": "Title",
+                    "device": "Device Type",
+                    "loc": "Location",
+                    "status": "Device Status"
+                }
+            },
+            "ev": {
+                "title": "Parking Spaces",
+                "parkingOptions": {
+                    "label": "Parking Options",
+                    "all": "All parking spaces",
+                    "onlyEVs": "with EV Stations",
+                    "noEVs": "without EV Stations"
+                },
+                "buttons": {
+                    "toMapView": "Search on Map"
+                },
+                "table": {
+                    "title": "Title",
+                    "owner": "Owner ID",
+                    "space": "Parking Space",
+                    "price": "Price per Hour",
+                    "loc": "Location",
+                    "avail": "Availability",
+                    "evStation": "EV Station?",
+                    "blocked": "Blocked?",
+                    "offered": "Offered?",
+                    "status": "Station Status",
+                    "statusValue": {
+                        "active": "Active",
+                        "inactive": "Inactive"
+                    },
+                    "sneakPeaks": {
+                        "availPeriod": "Availability Period ",
+                        "evStation": {
+                            "avail": "EV Station available:",
+                            "price": "Price Per KW/h: ",
+                            "type": "Charging Type: ",
+                            "plug": "Plug Type: ",
+                            "notAvail": "Not available"
+                        },
+                        "blocked": {
+                            "yes": "The parking space is currently occupied",
+                            "no": "The parking space is currently clear"
+                        },
+                        "offered": {
+                            "yes": "The parking space is currently offered",
+                            "no": "The parking space is currently available"
+                        }
+                    }
+                }
+            }
+        },
+        "map": {
+            "psu": {
+                "title": "Pollution Sensor Units"
+            },
+            "ev": {
+                "title": "Parking Spaces"
+            },
+            "buttons": {
+                "return": "Search in List"
+            }
+        }
+    },
+    "user-management": {
+        "title": "User Manager",
+        "buttons": {
+            "deleteSelected": "delete selected entries",
+            "addUser": "Add User"
+        },
+        "table": {
+            "userName": "User Name",
+            "email": "Email",
+            "roles": "Roles",
+            "actions": "Actions"
+        },
+        "profileDialog": {
+            "newTitle": "Register New User",
+            "newAccept": "Register",
+            "editTitle": "User Profile Settings",
+            "editAccept": "Save Changes",
+            "email": "Email",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "password": "Password",
+            "confirm": "Confirm Password",
+            "roles": "Roles",
+            "cancel": "Cancel"
+        },
+        "deleteDialog": {
+            "title": "Delete User",
+            "preQuestion": "Are you sure you want to delete the user: ",
+            "postQuestion": " ?"
+        },
+        "deleteAllDialog": {
+            "title": "Delete All Selected Users",
+            "preQuestion": "Are you sure you want to delete all selected users?",
+            "postQuestion": " "
+        }
+    },
+    "parkingspace-management": {
+        "title": "Parking-Space Management",
+        "titleSensors": "Sensorbox Management",
+        "buttons": {
+            "deleteSelected": "delete Selected",
+            "addSpace": "Add new"
+        },
+        "table": {
+            "state": "State",
+            "actions": "Actions"
+        }
+    },
+    "guest-search": {
+        "question": "Where do you want to park?",
+        "reserve": "Reserve Parking Spot",
+        "reserve_success": "Reservation successful!",
+        "reserve_error": "There was an error during reservation process. Please try again.",
+        "labels": {
+            "destination": "Destination",
+            "radius": "Choose a Radius",
+            "type": "Choose the Parking-Space Type",
+            "from": "From",
+            "until": "Until",
+            "EV": "Electric Vehicle",
+            "plugtype": "Choose a Plug Type",
+            "plugnote": "If your plug type is not featured, we do not offer compatible spots at this time."
+        },
+        "errors": {
+            "destination": "Destination is required.",
+            "radius": "Radius is required.",
+            "plugtype": "Plug type is required."
+        },
+        "buttons": {
+            "submit": "Search",
+            "reserve": "Reserve Spot",
+            "reserve_now": "Reserve Now",
+            "cancel": "Cancel"
+        },
+        "bookings": {
+            "dialog": {
+                "title": "Overview Bookings"
+            }
+        }
+    }
+}

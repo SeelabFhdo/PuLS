@@ -1,0 +1,5 @@
+The modules directory contains a collection of modules 
+(which are self-contained and independent of each other). 
+This separation allows Angular to load only the module it requires 
+to display the request thereby saving bandwidth and speeding 
+the entire application.

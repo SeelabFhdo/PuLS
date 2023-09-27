@@ -1,0 +1,13 @@
+version: "3.7"
+networks:
+  default:
+    external:
+      name: infrastructure_bridge
+
+services:
+  uiservice:
+    image: registry.seelab.fh-dortmund.de/puls/uiservice:latest
+    container_name: uiservice
+    restart: always
+    ports:
+      - "80:80"

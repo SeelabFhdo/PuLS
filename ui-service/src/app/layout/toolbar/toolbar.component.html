@@ -1,0 +1,35 @@
+<ng-container *transloco="let t">
+
+<mat-toolbar>
+
+    <img src="{{logoSrc}}" alt="{{logoAltLabel}}" />
+    <span class="mat-display-1">{{appTitle}}</span>
+    <span class="fillRemainingSpace"></span>
+
+    <button class="menuBtn" mat-icon-button [matMenuTriggerFor]="langMenu">
+      <mat-icon>languages</mat-icon>
+      {{activeLang}}
+    </button>
+    <mat-menu #langMenu="matMenu" xPosition="after">
+      <button *ngFor="let btn of config.langMenu.buttons" 
+        class="menuBtn" 
+        mat-menu-item (click)="btn.callback()">
+      {{ t(btn.label) }}
+      </button>
+    </mat-menu>
+
+    <ng-template [ngIf]="config.userMenu.currentUserData">
+      <button class="menuBtn" mat-button [matMenuTriggerFor]="userMenu">
+        {{config.userMenu.currentUserData.email}}<mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button *ngFor="let btn of config.userMenu.buttons" 
+          class="menuBtn" 
+          mat-menu-item (click)="btn.callback()">
+        <mat-icon>{{btn.icon}}</mat-icon>{{ t(btn.label) }}</button>
+      </mat-menu>
+    </ng-template>
+
+</mat-toolbar>
+
+</ng-container>

@@ -1,0 +1,97 @@
+@import 'src/app/styles/variables';
+
+.back {
+  margin-right: 1rem;
+  color: $white;
+  box-shadow: none;
+}
+
+.bookings-action-button {
+  margin-right: 1rem;
+  box-shadow: none;
+}
+
+.mat-table {
+    thead {
+      color: $black;
+      border-bottom: $border;
+    }
+  
+    td.mat-cell,
+    th.mat-header-cell {
+      font-size: 1.0rem;
+      color: $black;
+      text-align: center;
+      padding: 0.6rem;
+  
+      &.left {
+        text-align: left;
+      }
+    }
+  }
+
+.mat-column-bookingId {
+    flex: 0 0 5% !important;
+    min-width: 2vw !important;
+    padding-left: 2%;
+  }
+  
+  .mat-column-bookingStart {
+    flex: 0 0 10% !important;
+    min-width: 4vw !important;
+  }
+  
+  .mat-column-bookingEnd {
+    flex: 0 0 10% !important;
+    min-width: 4vw !important;
+  }
+  
+  .mat-column-pricePerHour {
+    flex: 0 0 10% !important;
+    min-width: 5vw !important;
+  }
+
+  .mat-column-pricePerKWh {
+    flex: 0 0 10% !important;
+    min-width: 5vw !important;
+  }
+  
+  .mat-column-bookingCreated {
+    flex: 0 0 10% !important;
+    min-width: 4vw !important;
+  }
+  
+  .mat-column-canceled {
+    flex: 0 0 10% !important;
+    min-width: 4vw !important;
+  }
+  
+  .mat-column-parkingSpaceLink {
+    flex: 0 0 10% !important;
+    min-width: 2vw !important;
+  }
+
+  .mat-column-action {
+    flex: 0 0 10% !important;
+    min-width: 10vw !important;
+  }
+  
+  @keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+   
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+  }

@@ -1,0 +1,102 @@
+stages:
+  - test
+  - build
+  - deploy
+
+build:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  needs:
+    - test:karma
+    - test:e2e
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY/$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY/$CI_REGISTRY_IMAGE"
+  only:
+    - master
+    - dev
+  tags:
+    - runner
+
+# docker-build:
+#   # Official docker image.
+#   image: docker:latest
+#   stage: build
+#   services:
+#     - docker:dind
+#   before_script:
+#     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#   script:
+#     - docker build --pull -t "$CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+#     - docker push "$CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+#   except:
+#     - master
+
+test:karma:
+  stage: test
+  image: trion/ng-cli-karma:latest
+  environment:
+    name: test
+    url: https://$DEPLOY_SERVER
+  before_script:
+    - npm install
+  script:
+    - npm run test:headless
+  coverage: '/Lines \W+: (\d+\.\d+)%.*/'
+  artifacts:
+    paths:
+      - coverage/
+  only:
+    - merge_requests
+    - master
+    - dev
+  tags:
+    - runner
+
+test:e2e:
+  stage: test
+  image: trion/ng-cli-e2e:latest
+  environment:
+    name: test
+    url: https://$DEPLOY_SERVER
+  before_script:
+    - npm install
+  script:
+    - npm run e2e:docker
+  only:
+    - merge_requests
+    - master
+    - dev
+  tags:
+    - runner
+
+deploy:
+  stage: deploy
+  image: ubuntu:latest
+  environment:
+    name: staging
+    url: https://$DEPLOY_SERVER
+  needs:
+    - build
+  before_script:
+    - apt-get update -qq
+    # Setup SSH deploy keys
+    - "which ssh-agent || ( apt-get install -qq openssh-client )"
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - ssh "$DEPLOY_USER@$DEPLOY_SERVER" "cd $DEPLOY_PATH_BASE/$REPOSITORY_NAME && git checkout dev"
+    - ssh "$DEPLOY_USER@$DEPLOY_SERVER" "cd $DEPLOY_PATH_BASE/$REPOSITORY_NAME && git pull"
+    - ssh "$DEPLOY_USER@$DEPLOY_SERVER" "cd $DEPLOY_PATH_BASE/$REPOSITORY_NAME && make server-update"
+  only:
+    - master
+    - dev
+  tags:
+    - runner

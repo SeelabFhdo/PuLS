@@ -1,0 +1,44 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@environment": ["./src/environments/environment.ts"],
+
+      //general app aliases
+      "@core/*": ["./src/app/core/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@sharedServices/*": ["./src/app/shared/services/*"],
+      "@sharedModels/*": ["./src/app/shared/models/*"],
+      "@sharedInterfaces/*": ["./src/app/shared/interfaces/*"],
+
+      // module aliases
+      "@loginModule/*": ["./src/app/modules/m-login/*"],
+      //"@userManagementModule/*": ["./src/app/modules/m-user-management/*"],
+      "@deviceBrowserModule/*": ["./src/app/modules/m-device-browser/*"],
+      "@guestModule/*": ["./src/app/modules/m-guest/*"],
+      "@deviceManagementModule/*": ["./src/app/modules/m-parkingspace-management/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

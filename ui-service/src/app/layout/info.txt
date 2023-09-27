@@ -1,0 +1,3 @@
+The layout directory contains one or more components which act 
+as a layout or are parts of a layout such as a Header, Nav, Footer, 
+Main content panel etc...

@@ -1,0 +1,58 @@
+/* Material Theming */
+@import "~@angular/material/theming";
+@import "variables";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Open Sans, sans-serif',
+  $display-4: mat-typography-level(16px, 16px, 600, 'Poppins, sans-serif'), /* Large, one-off header */
+  $display-3: mat-typography-level(20px, 20px, 600, 'Poppins, sans-serif'), /* Large, one-off header */
+  $display-2: mat-typography-level(30px, 30px, 600, 'Poppins, sans-serif'), /* Large, one-off header */
+  $display-1: mat-typography-level(44px, 44px, 600, 'Poppins, sans-serif'), /* Large, one-off header */
+  $headline: mat-typography-level(96px, 112px, 600), /* H1 */
+  $title: mat-typography-level(60px, 76px, 600), /* H2 */
+  $subheading-1: mat-typography-level(48px, 64px, 600), /* H3 */
+  $subheading-2: mat-typography-level(34px, 50px, 600), /* H4 */
+  $body-1: mat-typography-level(16px, 32px, 400), /* Base body text */
+  $body-2: mat-typography-level(14px, 30px, 600), /* Bolder body text */
+  $caption: mat-typography-level(14px, 30px, 600), /* Smaller body and hint text */
+  $button: mat-typography-level(14px, 30px, 600, 'Poppins, sans-serif'), /* Buttons and anchors */
+  $input: mat-typography-level(16px, 1.2, 600) /* Input fields. Line height of input must be unitless */
+);
+
+@include mat-core($custom-typography);
+@include angular-material-typography($custom-typography);
+
+$dark-jungle-green: (
+  100: #2a3e2c,
+  500: $black,
+  700: #000000,
+  contrast: ()
+);
+
+$nyanza: (
+  100: #ffffff,
+  500: $mint,
+  700: #9eb59e,
+  contrast: ()
+);
+
+$pale-pink: (
+  100: $lightred,
+  500: $darkred,
+  700: $darkred,
+  contrast: ()
+);
+
+$primary: mat-palette($dark-jungle-green);
+$accent: mat-palette($nyanza);
+$warn: mat-palette($pale-pink);
+
+$theme: mat-light-theme(
+    $primary,
+    $accent,
+    $warn
+);
+
+@include angular-material-theme($theme);

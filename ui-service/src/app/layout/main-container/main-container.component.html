@@ -1,0 +1,18 @@
+<div class="mainPageContainer">
+  <!-- toolbar -->
+  <toolbar-component
+    [logoSrc]="'../../../../assets/graphics/logoPulsWeb.png'"
+    [logoAltLabel]="'PuLS Logo'"
+    [appTitle]="platformTitle"
+    [config]="toolbarConfig">
+  </toolbar-component>
+  <!-- side nav container -->
+  <mat-sidenav-container class="mainPageDrawerContainer" autosize>
+    <!-- side nav menu -->
+    <mat-sidenav #sideNav class="side-nav" mode="side" opened="{{currentUser.userRoles.includes('ADMINISTRATOR')}}">
+      <app-half-close-side-nav-component [config]="halfCloseSideNavConfig"></app-half-close-side-nav-component>
+    </mat-sidenav>
+    <!-- main page content -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-container>
+</div>

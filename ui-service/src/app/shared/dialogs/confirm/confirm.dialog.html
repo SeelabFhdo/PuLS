@@ -1,0 +1,14 @@
+<ng-container *transloco="let t">
+
+<h1 mat-dialog-title>{{t(data.title)}}</h1>
+<div mat-dialog-content>
+  <p>{{t(data.preQuestion)}} {{data.item}} {{t(data.postQuestion)}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{t('common.no')}}</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+    {{t('common.yes')}}
+  </button>
+</div>
+
+</ng-container>

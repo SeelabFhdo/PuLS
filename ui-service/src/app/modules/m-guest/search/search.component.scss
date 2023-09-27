@@ -1,0 +1,74 @@
+@import 'src/app/styles/variables';
+
+.title {
+    background-color: $mint;
+    padding: 3rem 1rem;
+}
+
+.search-form {
+    margin: 0 1rem 1rem;
+    color: $white;
+
+    .input {
+        color: black;
+        background-color: $white;
+        width: 96%;
+        border-radius: $border-radius;
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .input, .time-row, a, mat-slide-toggle {
+        margin-top: 1rem;
+    }
+
+    mat-slide-toggle {
+        display: block;
+    }
+
+    a {
+        float: right;
+    }
+}
+
+.time-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+        width: 3rem;
+    }
+}
+
+.car-row {
+    max-height: 500px;
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+.hidden {
+    max-height: 0;
+    opacity: 0;
+}
+
+mat-form-field  {
+    background-color: $white;
+    border-radius: $border-radius;
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-bar {
+    background-color: $gray;
+}
+
+::ng-deep .mat-calendar-body-selected {
+    background-color: $mint;
+}
+
+::ng-deep .mat-calendar-body-today.mat-calendar-body-selected {
+    box-shadow: none;
+}
+
+::ng-deep .mat-option-text {
+    font-size: 1rem;
+}

@@ -1,0 +1,51 @@
+@import 'src/app/styles/variables';
+
+$arrow-width: 3rem;
+$side-padding: 1rem;
+
+.title {
+    background-color: $mint;
+    padding: 3rem $side-padding;
+    white-space: nowrap;
+
+    span {
+        width: calc(#{$guest-sidebar-width} - #{$arrow-width} - (2 * #{$side-padding}));
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    mat-icon {
+        font-size: $arrow-width;
+        width: $arrow-width;
+        height: $arrow-width;
+        cursor: pointer;
+    }
+}
+
+.button-row {
+    margin: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
+
+.result {
+    background-color: $white;
+    margin: 1rem;
+    border-radius: $border-radius;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    img {
+        height: $arrow-width;
+    }
+
+    .duration {
+        display: block;
+        font-size: 0.8rem;
+    }
+}

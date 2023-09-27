@@ -1,0 +1,112 @@
+<ng-container *transloco="let t">
+
+<mat-dialog-content>
+  <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit()">
+    <div class="mat-display-2">{{t(dialogTitle)}}</div>
+    <mat-form-field appearance="outline">
+      <mat-label>{{t('user-management.profileDialog.email')}}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="email"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      />
+      <mat-hint *ngIf="submitted && f.email.errors && f.email.errors.required" class="invalid-feedback">
+        Email is required.
+      </mat-hint>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field appearance="outline" class="right-margin">
+      <mat-label>{{t('user-management.profileDialog.firstName')}}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="firstName"
+        [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+      />
+      <mat-hint *ngIf="submitted && f.email.errors && f.email.errors.required" class="invalid-feedback">
+        First name is required.
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{t('user-management.profileDialog.lastName')}}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="lastName"
+        [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+      />
+      <mat-hint *ngIf="submitted && f.email.errors && f.email.errors.required" class="invalid-feedback">
+        Last name is required.
+      </mat-hint>
+    </mat-form-field>
+    <br />
+
+    <ng-container
+      *ngIf="passwordEditorVisible"
+    >
+      <mat-form-field appearance="outline" class="right-margin">
+        <mat-label>{{t('user-management.profileDialog.password')}}</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+        />
+        <mat-hint *ngIf="submitted && f.email.errors && f.email.errors.required" class="invalid-feedback">
+          Password is required.
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{t('user-management.profileDialog.confirm')}}</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="passwordConfirm"
+          [ngClass]="{ 'is-invalid': submitted && f.passwordConfirm.errors }"
+        />
+        <mat-hint *ngIf="submitted && f.email.errors && f.email.errors.required" class="invalid-feedback">
+          Password confirmation is required.
+        </mat-hint>
+      </mat-form-field>
+    </ng-container>
+  </form>
+
+  <!-- role editor -->
+  <div fxLayout="row" *ngIf="roleEditorVisible" class="form-group">
+    <label id="role-radio-group">{{t('user-management.profileDialog.roles')}}</label>
+    <br />
+    <mat-radio-group
+      aria-labelledby="role-radio-group"
+      [(ngModel)]="userRole"
+    >
+      <mat-radio-button color="primary" *ngFor="let role of roles" [value]="role">
+        {{role | titlecase}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button color="accent" mat-dialog-close (click)="onNoClick()">
+    {{t('user-management.profileDialog.cancel')}}
+  </button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button
+    mat-flat-button
+    color="accent"
+    [mat-dialog-close]="data"
+    cdkFocusInitial
+    [disabled]="loading"
+    (click)="onSubmit()"
+  >
+    <span
+      *ngIf="loading"
+      class="spinner-border spinner-border-sm mr-1"
+    ></span>
+    {{t(confirmButtonText) | titlecase}}
+  </button>
+</mat-dialog-actions>
+
+</ng-container>

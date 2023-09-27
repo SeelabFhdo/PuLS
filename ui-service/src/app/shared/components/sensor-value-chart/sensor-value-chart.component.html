@@ -1,0 +1,49 @@
+<mat-grid-list
+  class="detailsValueMonitorGrid"
+  cols="10"
+  rowHeight="fit"
+  [gutterSize]="'1%'"
+>
+  <mat-grid-tile
+    colspan="1"
+    rowspan="1"
+    class="detailsValueMonitorLabel"
+  >
+      {{label | titlecase}}
+      <br />
+      in {{unit}}
+  </mat-grid-tile>
+  <mat-grid-tile colspan="8" rowspan="1">
+    <canvas
+      baseChart
+      [datasets]="chartDataSets"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [colors]="chartColors"
+      [legend]="false"
+      [chartType]="chartType"
+    >
+    </canvas>
+  </mat-grid-tile>
+  
+  <mat-grid-tile colspan="1" rowspan="1">
+    <div class="detailsValueMonitorGauge" (window:resize)="resizeGauge()">
+      <ngx-gauge
+        [value]="this.latestValue.value"
+        [size]="gaugeSettings.size"
+        [type]="gaugeSettings.type"
+        [min]="gaugeSettings.min"
+        [max]="gaugeSettings.max"
+        [thick]="gaugeSettings.thick"
+        [animate]="gaugeSettings.animate"
+        [duration]="gaugeSettings.duration"
+        [cap]="gaugeSettings.cap"
+        [label]="gaugeSettings.label"
+        [append]="gaugeSettings.append"
+        [foregroundColor]="gaugeSettings.foregroundColor"
+        [thresholds]="gaugeSettings.thresholdConfig"
+      ></ngx-gauge>
+    </div>
+  </mat-grid-tile>
+  
+</mat-grid-list>

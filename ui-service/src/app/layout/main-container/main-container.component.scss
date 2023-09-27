@@ -1,0 +1,29 @@
+@import 'src/app/styles/variables';
+
+.mainPageContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.mainPageDrawerContainer {
+  // 64px and 56px come from the height of the navbar
+  height: calc(100% - 64px);
+  width: 100%;
+
+  @media only screen and (max-width: 600px) {
+    height: calc(100% - 56px);
+  }
+}
+
+.mainPageSideNavDrawer {
+  background-color: $black;
+}
+
+.mainPageSideNavToggleBtn {
+  color: $white;
+}
+
+.side-nav {
+  background-color: $black;
+  user-select: none;
+}

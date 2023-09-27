@@ -1,0 +1,30 @@
+.three-phase-display-container {
+    position: relative;
+
+    background-color: white;
+
+    width: 300px;
+    height: 300px;
+
+    background-image: url("../../../../assets/graphics/threephase.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.l1 {
+    position: absolute;
+    left: 33%;
+    top: 5%;
+}
+
+.l2 {
+    position: absolute;
+    left: 66%;
+    top: 60%;
+}
+
+.l3 {
+    position: absolute;
+    left: 0%;
+    top: 60%;
+}

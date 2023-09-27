@@ -1,0 +1,61 @@
+@import 'src/app/styles/variables';
+
+.componentContainer {
+  background-color: $black;
+  height: 100%;
+  width: 100%;
+}
+
+mat-toolbar {
+  color: $black;
+  justify-content: center;
+  height: 15rem;
+  flex-direction: column;
+
+  span {
+    margin-bottom: 1rem;;
+  }
+}
+
+form {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: $border-radius;
+  text-align: right;
+}
+
+input.mat-input-element {
+  display: block;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
+  border-radius: $border-radius;
+}
+
+.invalid-feedback {
+  text-align: left;
+}
+
+button.mat-flat-button {
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+.mat-progress-spinner {
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+
+a {
+  margin: 0 1rem;
+  color: $mint;
+  text-decoration: none;
+
+  &:hover {
+    color: $mint;
+    text-decoration: underline;
+  }
+}

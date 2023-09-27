@@ -1,0 +1,23 @@
+@import 'src/app/styles/variables';
+
+.back {
+  margin-right: 1rem;
+  color: $white;
+  box-shadow: none;
+}
+
+.stacked {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  align-content: flex-start;
+  margin-left: 2rem;
+
+  & > * {
+    margin-bottom: 1rem;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,55 @@
+<ng-container *transloco="let t">
+
+<div class="main-page">
+  <div class="top-row">
+    <div class="title">
+      <button
+        mat-mini-fab
+        class="back"
+        color="primary"
+        [routerLink]="['/'+this.returnUrl]"
+        aria-label="Back"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div>
+        <div class="mat-display-1">{{data.device.name | slice: 0:45}}</div>
+        <div class="mat-display-2">
+          {{data.device.desc | slice: 0:70}}
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="stacked">
+        <span class="mat-display-3">{{ t('device-browser.details.status') }}</span>
+        <mat-chip-list class="custom-chip-list">
+          <mat-chip
+            [class.active]="onlineChipState.selectionState"
+            selected="{{onlineChipState.selectionState}}"
+            disableRipple="true"
+            >{{t(onlineChipState.label)}}</mat-chip
+          >
+        </mat-chip-list>
+      </div>
+      <div class="stacked">
+        <span class="mat-display-3">{{ t('device-browser.details.location') }}</span>
+        <p>{{data.device.lng.toString() | slice: 0:8}}, {{data.device.lat.toString() | slice: 0:8}}</p>
+        <a
+          mat-flat-button
+          color="accent"
+          href="http://www.google.com/maps/place/{{data.device.lat}},{{data.device.lng}}"
+          target="_blank"
+        >
+          {{ t('device-browser.details.buttons.viewOnMap') }}<mat-icon>open_in_new</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <details-monitor-component [data]="data" [deviceType]="deviceType">
+  </details-monitor-component>
+
+</div>
+
+</ng-container>

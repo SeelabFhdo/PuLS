@@ -1,0 +1,40 @@
+<div class="componentContainer">
+  <mat-toolbar color="accent">
+    <span class="mat-display-1">{{platformTitle}} Web Interface</span>
+    <span class="mat-display-2">Sign In</span>
+  </mat-toolbar>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label for="email" class="sr-only">Email</label>
+    <input
+      matInput
+      id="email"
+      type="text"
+      placeholder="Email"
+      formControlName="email"
+      [ngClass]="{ 'is-invalid': submitted && (f.email.errors  || error)}"
+    />
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required">Email is required</div>
+    </div>
+    <div *ngIf="submitted && error" class="invalid-feedback">
+      <div>Email or password is invalid</div>
+    </div>
+
+    <label for="password" class="sr-only">Password</label>
+    <input
+      matInput
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+      [ngClass]="{ 'is-invalid': submitted && (f.password.errors || error)}"
+    />
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">Password is required</div>
+    </div>
+
+    <a routerLink="/register">Request an account</a>
+    <button mat-flat-button color="accent">
+      Login
+    </button>
+  </form>
+</div>

@@ -1,0 +1,124 @@
+<div>
+    <div class="mat-display-3 evStationLabel">EV-Station Charging Info</div>
+
+    <div class="gaugeContainer">
+
+        <table class="center border-spacing" width=96%>
+            <tr>
+                <td colspan="5" style="border-bottom: 1px solid lightgray;">
+                    <div style="margin-bottom: 1%;">Station Id: <b>{{ stationId }}</b></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="left-bold-text-middle-aligned">
+                    History of Charging Processes
+                </td>
+                <td style="border-left: 1px solid lightgray;">
+                    <mat-chip
+                          style="font-size: 0.8vw; margin-left: 15%; color: black;"
+                          disableRipple="true"
+                          matTooltip="Indicates whether the Station currently shows live information or not 
+                          (note that there is an average delay of 10 seconds between client side updates, which we still consider live)"
+                          [ngStyle]="{'background-color': '#cfe7cf'}"
+                          >
+                          Live
+                    </mat-chip>
+                </td>
+                <td style="text-align: right; font-weight: bold; font-size: 0.9vw;">
+                    <div style="text-align: left;  vertical-align: top;">Parking / Charging State</div>
+                    <div>&nbsp;</div>
+                    <div style="vertical-align: bottom; font-size: 0.7vw;">10</div>
+                </td>
+                <td>
+                    <mat-chip
+                          style="font-size: 0.8vw; margin-left: 15%; margin-top: 5%; color: black;"
+                          disableRipple="true"
+                          matTooltip="Grid-Status-Code: {{gridStatusCode}} = {{getGridStatusPercentage(gridStatusCode)}}% Quality"
+                          [ngStyle]="{'background-color': gridStatusCode <= 3 ? '#cfe7cf' : (gridStatusCode <= 6 ? '#ffffcc' :  '#ff6666')}"
+                          >{{gridStatusCode <= 3 ? 'Grid-State: Good' : (gridStatusCode <= 6 ? 'Grid-State: Moderate' : 'Grid-State: Bad')}}
+                          <mat-icon matChipRemove>{{ getChipIcon(gridStatusCode) }}</mat-icon>
+                    </mat-chip>
+                    <mat-progress-bar
+                        class="progress-margin"
+                        matTooltip="Grid-Status-Code: {{gridStatusCode}} = {{getGridStatusPercentage(gridStatusCode)}}% Quality"
+                        [mode]="'determinate'"
+                        [value]="getGridStatusPercentage(gridStatusCode)">
+                    </mat-progress-bar>
+                </td>
+                <td style="text-align: left; font-weight: bold; font-size: 0.9vw;">
+                    <div style="margin-left: 10%; vertical-align: top;">Electric Power State</div>
+                    <div>&nbsp;</div>
+                    <div style="vertical-align: bottom; font-size: 0.7vw;">1</div>
+                </td>
+            </tr>
+            <tr>
+                <td width=30% rowspan="2" style="vertical-align: top;">
+
+                    <div style="overflow: auto; max-height: 25vw;">
+                        <table class="table" mat-table [dataSource]="dataSourceChargingHistory">
+                            <!--
+                            <ng-container matColumnDef="chargingSnapshotNumber">
+                                <th mat-header-cell *matHeaderCellDef>
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i = index">
+                                    {{chargingHistoryTablePaginator.pageIndex * 
+                                        chargingHistoryTablePaginator.pageSize + (i + 1)}}
+                                </td>
+                            </ng-container>
+                            -->
+                            <ng-container matColumnDef="chargingSnapshotIcon">
+                                <th mat-header-cell *matHeaderCellDef>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <div>
+                                        <mat-icon>history</mat-icon>
+                                        <mat-icon>battery_charging_full</mat-icon>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="chargingSnapshotTimestamp">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Timestamp
+                                </th>
+                                <td mat-cell *matCellDef="let row">{{row.timestamp}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="chargingSnapshotDetails">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Amount
+                                </th>
+                                <td mat-cell *matCellDef="let row">{{row.amount}}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator #chargingHistoryTablePaginator [pageSize]="5" [pageSizeOptions]="[5]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+
+                </td>
+                <td width=5% style="border-left: 1px solid lightgray;"></td>
+                <td width=15%><charging-spinner stationId={{stationId}}></charging-spinner></td>
+                <td width=15% class="evStationImg center-bold-text-top-aligned">
+                    <div class="text-box-rounded" style="font-weight: lighter;">Latest Heartbeat:<br><b>{{latestHeartBeat}}</b></div>
+                </td>
+                <td width=35%><three-phase-display stationId={{stationId}}></three-phase-display></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-top: 1px solid lightgray; border-left: 1px solid lightgray;">
+                    <canvas
+                        baseChart
+                        [datasets]="chartDataSets"
+                        [labels]="chartLabels"
+                        [options]="chartOptions"
+                        [colors]="chartColors"
+                        [legend]="false"
+                        [chartType]="chartType"
+                    >
+                    </canvas>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>

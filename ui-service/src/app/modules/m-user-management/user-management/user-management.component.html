@@ -1,0 +1,139 @@
+<ng-container *transloco="let t">
+
+<div class="main-page">
+  <div class="top-row">
+    <div class="mat-display-1">{{t(title)}}</div>
+
+    <div class="actions">
+      <mat-form-field appearance="outline" class="custom-form-field right-margin">
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Filter"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button
+        *ngIf="selectionModel.selected.length > 0"
+        mat-flat-button
+        color="accent"
+        (click)="openSelectedUsersDeleteConfirmDialog()"
+      >
+      {{ t('user-management.buttons.deleteSelected') }} ({{selectionModel.selected.length}})
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        mat-flat-button
+        color="accent"
+        (click)="openAddUserDialog()"
+      >
+      {{ t('user-management.buttons.addUser') }}
+      </button>
+    </div>
+  </div>
+  <table
+    class="table"
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+  >
+    <!-- Selection Column -->
+    <ng-container matColumnDef="selection">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          color="primary"
+          (change)="$event ? masterToggle() : null"
+          [checked]="selectionModel.hasValue() && isAllSelected()"
+          [indeterminate]="selectionModel.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          color="primary"
+          [disableRipple]="true"
+          (change)="$event ? selectionModel.toggle(row) : null"
+          [checked]="selectionModel.isSelected(row)"
+          (click)="$event.preventDefault()"
+        ></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- User Icon Column -->
+    <ng-container matColumnDef="userIcon">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row">
+        <mat-icon>person</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Username Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="left">{{ t('user-management.table.userName') }}</th>
+      <td mat-cell *matCellDef="let row" class="left">{{row.name}}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="left">{{ t('user-management.table.email') }}</th>
+      <td mat-cell *matCellDef="let row" class="left">{{row.email}}</td>
+    </ng-container>
+
+    <!-- Role Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="left">{{ t('user-management.table.roles') }}</th>
+      <td mat-cell *matCellDef="let row" class="left">{{row.roles.join(', ') | titlecase }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>{{ t('user-management.table.actions') }}</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-flat-button
+          class="square"
+          color="accent"
+          (click)="selectionModel.clear(); openUserProfileDialog(row)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          class="actionBtn"
+          mat-flat-button
+          class="square"
+          color="accent"
+          (click)="selectionModel.clear(); openUserDeleteConfirmDialog(row)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- table header -->
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></tr>
+    <!-- table row -->
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      [ngClass]="{
+        hovered: row.hovered,
+        selected: selectionModel.hasValue() && selectionModel.isSelected(row)
+      }"
+      (click)="selectionModel.toggle(row)"
+      (mouseover)="row.hovered = true"
+      (mouseout)="row.hovered = false"
+    ></tr>
+  </table>
+
+  <!-- paginator -->
+  <mat-paginator
+    [pageSize]="6"
+    [pageSizeOptions]="[5, 6, 7, 8, 9, 10, 15, 20, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+
+</ng-container>

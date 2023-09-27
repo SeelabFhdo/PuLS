@@ -1,0 +1,35 @@
+<div class="title">
+    <mat-icon (click)="goBack()">keyboard_backspace</mat-icon>
+    <span class="mat-display-2" title="{{queryParams.get('destination')}}">
+        {{queryParams.get('destination')}}
+    </span>
+</div>
+<div class="button-row">
+    <button
+        mat-flat-button
+        color="accent"
+        [matMenuTriggerFor]="menu"
+    >
+        <mat-icon>sort</mat-icon>Sort
+    </button>
+    <mat-menu #menu="matMenu" xPosition="after">
+        <button mat-menu-item (click)="sort(Sort.LowDistance)">Lowest Distance</button>
+        <button mat-menu-item (click)="sort(Sort.HighDistance)">Highest Distance</button>
+        <button mat-menu-item (click)="sort(Sort.LowPrice)">Lowest Price</button>
+        <button mat-menu-item (click)="sort(Sort.HighPrice)">Highest Price</button>
+    </mat-menu>
+</div>
+<div class="result" *ngFor="let result of foundParkingSpaces; let i = index" 
+[routerLink]="['/search/details', result.id]" 
+[queryParams]="{from: queryParams.get('from'), until: queryParams.get('until')}">
+    <div>
+        <img src="assets/graphics/pulsEvStation.png" />
+    </div>
+    <div>
+        <span class="mat-body-1">{{result.name}}</span>
+        <!--<span class="duration">{{formatDuration(durations.get(result.id))}}</span>-->
+    </div>
+    <div>
+        <span class="mat-display-4">{{result.parkingPricePerHour}} €</span>
+    </div>
+</div>

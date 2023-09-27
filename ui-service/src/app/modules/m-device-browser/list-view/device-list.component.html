@@ -1,0 +1,341 @@
+<ng-container *transloco="let t">
+
+<div class="top-row">
+  <div class="mat-display-1">{{ t(title) }}</div>
+  <div class="actions">
+    <ng-container *ngIf="deviceType == 'ev'">
+
+      <!-- open ev editor -->
+      <button 
+      mat-flat-button
+      class="right-margin"
+      color="accent"
+      [routerLink]="['/deviceeditor/'+deviceType]"
+      [queryParams]="{deviceType: 'ev'}"
+      >
+      <mat-icon>settings</mat-icon>
+      </button>
+
+      <mat-form-field appearance="outline" class="custom-form-field right-margin">
+        <mat-label>{{ t('device-browser.list.ev.parkingOptions.label') }}</mat-label>
+        <mat-select
+          (selectionChange)="onParkingOptionChange($event)"
+          [(value)]="parkingOptionSelection"
+        >
+          <mat-option *ngFor="let pOpt of parkingOptions" [value]="pOpt.value">
+            {{ t(pOpt.label) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- open psu editor -->
+    <ng-container *ngIf="deviceType == 'psu'">
+      <button 
+        mat-flat-button
+        class="right-margin"
+        color="accent"
+        [routerLink]="['/deviceeditor/'+deviceType]"
+        [queryParams]="{deviceType: 'psu'}"
+        >
+        <mat-icon>settings</mat-icon>
+      </button>
+    </ng-container>
+
+    <mat-form-field appearance="outline" class="custom-form-field right-margin">
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      color="accent"
+      [routerLink]="['/devicebrowsermap/'+deviceType]"
+    >
+    <mat-icon>map</mat-icon>
+      {{ t('device-browser.list.ev.buttons.toMapView') }}
+    </button>
+    
+  </div>
+</div>
+
+<!--------------->
+<!-- psu table -->
+<!--------------->
+<table
+  *ngIf="deviceType === 'psu'"
+  class="table"
+  mat-table
+  [dataSource]="dataSourceDevices"
+  matSort
+>
+  <ng-container matColumnDef="deviceIcon">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row">
+      <img
+        class="device-avatar-icon"
+        src="{{deviceIcon(row.status === 'ACTIVE')}}"
+        alt="device icon"
+      />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.psu.table.id') }}
+    </th>
+    <td mat-cell *matCellDef="let row">{{row.sensorBoxId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceTitle">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="left">
+      {{ t('device-browser.list.psu.table.title') }}
+    </th>
+    <td mat-cell *matCellDef="let row" class="left">
+      <div>{{row.name}}</div>
+      <small>{{row.description}}</small>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceSensorType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.psu.table.device') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <div>{{row.sensorType | titlecase}}</div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceLocation">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.psu.table.loc') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <a
+        href="http://www.google.com/maps/place/{{row.latitude}},{{row.longitude}}"
+        target="_blank"
+        (mouseover)="deviceRouterLinkActive(false)"
+        (mouseout)="deviceRouterLinkActive(true)"
+      >
+        {{row.latitude.toString() | slice: 0:8}}, {{row.longitude.toString() | slice: 0:8}}
+      </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceState">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.psu.table.status') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list>
+        <mat-chip
+          [class.active]="onlineChipStateRow(row).selectionState"
+          selected="{{onlineChipStateRow(row).selectionState}}"
+          disableRipple="true"
+          >{{ t(onlineChipStateRow(row).label) }}
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="deviceTableProfile.displayedColumnsDevices; sticky: true"
+  ></tr>
+
+  <tr
+    mat-row
+    [routerLink]="isDeviceRouterLinkActive() ? ['/devicebrowser/'+deviceType+'/'+row.sensorBoxId] : []"
+    *matRowDef="let row; columns: deviceTableProfile.displayedColumnsDevices;"
+  ></tr>
+</table>
+
+<!--------------->
+<!-- ev table --->
+<!--------------->
+
+<table
+  *ngIf="deviceType === 'ev'"
+  class="table"
+  mat-table
+  [dataSource]="dataSourceDevices"
+  matSort
+>
+
+  <ng-container matColumnDef="deviceIcon">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row">
+      <img
+        class="device-avatar-icon"
+        src="{{row.pluginType ? deviceIcon(row.activated === true) : parkingSpaceIcon(row.activated === true)}}"
+        alt="device icon"
+      />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceTitle">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="left">
+      {{ t('device-browser.list.ev.table.title') }}
+    </th>
+    <td mat-cell *matCellDef="let row" class="left">
+      <div>{{row.name}}</div>
+      <small>{{row.description}}</small>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ownerId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.owner') }}
+    </th>
+    <td mat-cell *matCellDef="let row">{{row.ownerId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="parkingSpaceSize">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.space') }}
+    </th>
+    <td mat-cell *matCellDef="let row">{{row.parkingSpaceSize | titlecase}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="parkingPricePerHour">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.price') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{row.parkingPricePerHour}} €
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceLocation">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.loc') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <a
+        href="http://www.google.com/maps/place/{{row.latitude}},{{row.longitude}}"
+        target="_blank"
+        (mouseover)="deviceRouterLinkActive(false)"
+        (mouseout)="deviceRouterLinkActive(true)"
+      >
+        {{row.latitude.toString() | slice: 0:8}}, {{row.longitude.toString() | slice: 0:8}}
+      </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="availability">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.avail') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list class="custom-chip-list">
+        <mat-chip
+          disableRipple="true"
+          matTooltip="{{row.availabilityPeriods ?
+            $().parkingSpaceAvailabilitySneakPeakString(row) :
+            ''}}"
+        >
+          <mat-icon>
+            {{'event_note'}}
+          </mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="evstation">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.evStation') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list class="custom-chip-list">
+        <mat-chip
+          disableRipple="true"
+          matTooltip="{{row.pluginType ?
+            $().evStationDetailsSneakPeakString(row) :
+            t('device-browser.list.ev.table.sneakPeaks.evStation.notAvail')}}"
+        >
+          <mat-icon>ev_station</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="blocked">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.blocked') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list class="custom-chip-list">
+        <mat-chip
+          disableRipple="true"
+          matTooltip="{{row.blocked ?
+            t('device-browser.list.ev.table.sneakPeaks.blocked.yes') :
+            t('device-browser.list.ev.table.sneakPeaks.blocked.no')}}"
+        >
+          <mat-icon>electric_car</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="offered">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.offered') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list class="custom-chip-list">
+        <mat-chip
+          disableRipple="true"
+          matTooltip="{{row.offered ?
+            t('device-browser.list.ev.table.sneakPeaks.offered.yes') :
+            t('device-browser.list.ev.table.sneakPeaks.offered.no')}}"
+        >
+          <mat-icon>
+            {{'event_available'}}
+          </mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="activated">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ t('device-browser.list.ev.table.status') }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-list class="custom-chip-list">
+        <mat-chip
+          [class.active]="onlineChipState(row.activated).selectionState"
+          selected="{{onlineChipState(row.activated).selectionState}}"
+          disableRipple="true"
+          >{{t(onlineChipState(row.activated).label)}}</mat-chip
+        >
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="deviceTableProfile.displayedColumnsDevices; sticky: true"
+  ></tr>
+
+  <tr
+    mat-row
+    [routerLink]="isDeviceRouterLinkActive() ? ['/devicebrowser/'+deviceType+'/'+row.id+'/'+(row.pluginType ? 'electrified' : 'none')] : []"
+    *matRowDef="let row; columns: deviceTableProfile.displayedColumnsDevices;"
+  ></tr>
+</table>
+
+
+<mat-paginator
+  #devicesTablePaginator
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 15, 20]"
+  showFirstLastButtons
+></mat-paginator>
+
+</ng-container>

@@ -1,0 +1,30 @@
+<div class="dual-gauge-container" [ngStyle]="{ 'width': componentSize }">
+
+    <span class="gauge-label">{{lbl}}</span>
+    <span class="gauge-footer">{{ftr}}</span>
+
+    <div class="gauge" style="--color:#612222; --background:#e9ecef;">
+        <div class="percentage" [ngStyle]="{ 'transform': calcAngleCss(v1, v1Settings.max) }"></div>
+        <div class="mask"></div>
+        <span class="value">
+            <!--
+            <span style="text-align: right;" [CountTo]="v1" [from]="lastV1" [duration]="1"></span>
+            <span style="text-align: left;">{{v1Settings.unit}}</span>
+            -->
+            {{v1}}{{v1Settings.unit}}
+        </span>
+    </div>
+
+    <div class="gauge2" style="margin-top: 1%; --color:#252c86; --background:#e9ecef; transform: rotateX(180deg);">
+        <div class="percentage2" [ngStyle]="{ 'transform': calcAngleCss(v2, v2Settings.max) }"></div>
+        <div class="mask2"></div>
+        <span class="value2" style="transform: rotateX(180deg);">
+            <!--
+            <span style="text-align: right;" [CountTo]="v2" [from]="lastV2" [duration]="1"></span>
+            <span style="text-align: left;">{{v2Settings.unit}}</span>
+            -->
+            {{v2}}{{v2Settings.unit}}
+        </span>
+    </div>
+
+</div>

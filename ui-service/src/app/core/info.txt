@@ -1,0 +1,4 @@
+This directory is for classes used by app.module. 
+Resources which are always loaded such as route guards, 
+HTTP interceptors, and application level services, 
+logging and the static routing module belong in this directory.

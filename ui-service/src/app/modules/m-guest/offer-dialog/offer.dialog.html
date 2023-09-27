@@ -1,0 +1,142 @@
+<ng-container *transloco="let t">
+
+    <div class="top-row">
+
+        <button
+        mat-mini-fab
+        class="back"
+        color="primary"
+        aria-label="Back"
+        (click)="onBack()"
+        >
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="mat-display-1" style=" width: 100%; text-align: center;">Offer own Parking-Spots</div>
+
+    </div>
+
+    <div class="actions">
+        <mat-form-field appearance="outline" class="custom-form-field right-margin">
+            <input
+              matInput
+              (keyup)="applyFilter($event.target.value)"
+              placeholder="Filter"
+            />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <button
+            *ngIf="selectionModel.selected.length > 0"
+            mat-flat-button
+            color="accent"
+            (click)="openSelectedParkingSpaceDeleteConfirmDialog()"
+          >
+          {{ t('parkingspace-management.buttons.deleteSelected') }} ({{selectionModel.selected.length}})
+            <mat-icon>delete</mat-icon>
+          </button>
+          &nbsp; &nbsp;
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="openAddUserDialog()"
+          >
+          {{ t('parkingspace-management.buttons.addSpace') }}
+          </button>
+        </div>
+
+    <table class="table" mat-table [dataSource]="dataSourceOwnSpots">
+
+        <ng-container matColumnDef="selection">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                color="primary"
+                (change)="$event ? masterToggle() : null"
+                [checked]="selectionModel.hasValue() && isAllSelected()"
+                [indeterminate]="selectionModel.hasValue() && !isAllSelected()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                color="primary"
+                [disableRipple]="true"
+                (change)="$event ? selectionModel.toggle(row) : null"
+                [checked]="selectionModel.isSelected(row)"
+                (click)="$event.preventDefault()"
+              ></mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+                <mat-icon Style="border: 1px solid black; border-radius: 3px;">
+                    local_parking
+                </mat-icon>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="offered">
+            <th mat-header-cell *matHeaderCellDef class="left">
+                Offered
+            </th>
+            <td mat-cell *matCellDef="let row" class="left">
+            <div>row.offered)</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="parkingSpaceLink">
+            <th mat-header-cell *matHeaderCellDef class="left">
+                Spot
+            </th>
+            <td mat-cell *matCellDef="let row" class="left">
+                <div>
+                    <mat-icon (click)="navigateToSpot(row.parkingSpaceId)">room</mat-icon>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>{{ t('parkingspace-management.table.actions') }}</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                mat-flat-button
+                class="square"
+                color="accent"
+                (click)="selectionModel.clear(); openParkingSpaceProfileDialog(row)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              &nbsp;
+              <button
+                class="actionBtn"
+                mat-flat-button
+                class="square"
+                color="accent"
+                (click)="selectionModel.clear(); openParkingSpaceDeleteConfirmDialog(row)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+        </ng-container>
+
+        <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumnsOwnSpots; sticky: true"
+        ></tr>
+
+        <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsOwnSpots;"
+        ></tr>
+
+    </table>
+
+    <mat-paginator
+    #ownSpotsTablePaginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 15, 20]"
+    showFirstLastButtons
+    ></mat-paginator>
+
+</ng-container>

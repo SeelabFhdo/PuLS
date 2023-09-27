@@ -1,0 +1,232 @@
+{
+    "common": {
+        "yes": "ja",
+        "no": "nein"
+    },
+    "sidenav": {
+        "buttons": {
+            "search": "Suchen",
+            "parkingSpaces": "Parkplätze",
+            "pollutionSensorUnits": "Schadstoffsensoren",
+            "users": "Benutzer",
+            "itemManagement": "Objektverwaltung" 
+        }
+    },
+    "toolbar": {
+        "lang": {
+            "en": "EN",
+            "en_full": "Englisch",
+            "de": "DE",
+            "de_full": "Deutsch"
+        },
+        "userMenu": {
+            "settings": "Einstellungen",
+            "ownBookings": "Eigene Buchungen",
+            "offerSpace": "Eigenen Parkplatz anbieten",
+            "logOut": "Ausloggen"
+        }
+    },
+    "device-browser": {
+        "details-monitor": {
+            "psu": {
+                "tabs": {
+                    "telemetry": "Telemetriedaten der Umgebung"
+                }
+            },
+            "ev": {
+                "tabs": {
+                    "overview": "Parkplatzübersicht",
+                    "statistics": "Telemetrie und Statistiken"
+                },
+                "overviewPanels": {
+                    "id": "Besitzer ID",
+                    "size": "Parkplatzgröße",
+                    "price": "Preis pro Stunde",
+                    "address": "Adresse",
+                    "blocked": {
+                        "label": "Blockiert?",
+                        "yes": "Besetzt",
+                        "no": "Frei"
+                    },
+                    "offered": {
+                        "label": "Gebucht?",
+                        "yes": "Gebucht",
+                        "no": "Verfügbar"
+                    },
+                    "evStationDetails": {
+                        "label": "Details zur Ladestation",
+                        "priceKw": "Preis pro KWh",
+                        "type": "Typ der Ladestation",
+                        "plug": "Steckervariante"
+                    },
+                    "availPeriod": {
+                        "label": "Verfügbare Zeiträume",
+                        "period": "Verfügbarkeitszeitraum",
+                        "from": "Von",
+                        "to": "Bis"
+                    }
+                }
+            }
+        },
+        "details": {
+            "statusValue": {
+                "active": "Aktiv",
+                "inactive": "Inaktiv"
+            },
+            "status": "Status",
+            "location": "Standort",
+            "buttons": {
+                "viewOnMap": "Auf Karte anzeigen"
+            }
+        },
+        "list": {
+            "psu": {
+                "title": "Schadstoffsensoren",
+                "table": {
+                    "id": "ID",
+                    "title": "Bezeichnung",
+                    "device": "Gerätetyp",
+                    "loc": "Standort",
+                    "status": "Gerätestatus"
+                }
+            },
+            "ev": {
+                "title": "Parkplätze",
+                "parkingOptions": {
+                    "label": "Parkplatzoptionen",
+                    "all": "Alle Parkplätze",
+                    "onlyEVs": "mit Ladestationen",
+                    "noEVs": "ohne Ladestationen"
+                },
+                "buttons": {
+                    "toMapView": "Kartenansicht"
+                },
+                "table": {
+                    "title": "Bezeichnung",
+                    "owner": "Besitzer ID",
+                    "space": "Parkplatz",
+                    "price": "Preis pro Stunde",
+                    "loc": "Ort",
+                    "avail": "Verfügbarkeit",
+                    "evStation": "EV Ladestation?",
+                    "blocked": "Blockiert?",
+                    "offered": "Angeboten?",
+                    "status": "Status der Ladestation",
+                    "statusValue": {
+                        "active": "Aktiv",
+                        "inactive": "Inaktiv"
+                    },
+                    "sneakPeaks": {
+                        "availPeriod": "Verfügbarkeitszeitraum ",
+                        "evStation": {
+                            "avail": "Ladestation verfügbar:",
+                            "price": "Preis pro KW/h: ",
+                            "type": "Typ der Ladestation: ",
+                            "plug": "Steckervariante: ",
+                            "notAvail": "Nicht verfügbar"
+                        },
+                        "blocked": {
+                            "yes": "Der Parkplatz ist zur Zeit blockiert",
+                            "no": "Der Parkplatz ist zur Zeit frei"
+                        },
+                        "offered": {
+                            "yes": "Der Parkplatz wurde bereits gebucht",
+                            "no": "Der Parkplatz ist zur Zeit verfügbar"
+                        }
+                    }
+                }
+            }
+        },
+        "map": {
+            "psu": {
+                "title": "Schadstoffsensoren"
+            },
+            "ev": {
+                "title": "Parkplätze"
+            },
+            "buttons": {
+                "return": "Listenansicht"
+            }
+        }
+    },
+    "user-management": {
+        "title": "Benutzerverwaltung",
+        "buttons": {
+            "deleteSelected": "Ausgewählte Einträge löschen",
+            "addUser": "Benutzer hinzufügen"
+        },
+        "table": {
+            "userName": "Benutzername",
+            "email": "Email",
+            "roles": "Benutzerrollen",
+            "actions": "Aktionen"
+        },
+        "profileDialog": {
+            "newTitle": "Neuen Benutzer registrieren",
+            "newAccept": "Registrieren",
+            "editTitle": "Einstellungen Benutzerprofil",
+            "editAccept": "Änderungen übernehmen",
+            "email": "Email",
+            "firstName": "Vorname",
+            "lastName": "Nachname",
+            "password": "Passwort",
+            "confirm": "Passwort bestätigen",
+            "roles": "Benutzerrollen",
+            "cancel": "Abbrechen"
+        },
+        "deleteDialog": {
+            "title": "Benutzer löschen",
+            "preQuestion": "Sind sie sicher, dass sie den Benutzer ",
+            "postQuestion": " löschen möchten?"
+        },
+        "deleteAllDialog": {
+            "title": "Delete All Selected Users",
+            "preQuestion": "Are you sure you want to delete all selected users?",
+            "postQuestion": " "
+        }
+    },
+    "parkingspace-management": {
+        "title": "Parkplatzverwaltung",
+        "titleSensors": "Verwaltung der Sensorboxen",
+        "buttons": {
+            "deleteSelected": "Ausgewählte Einträge löschen",
+            "addSpace": "Neu hinzufügen"
+        },
+        "table": {
+            "state": "Status",
+            "actions": "Aktionen"
+        }
+    },
+    "guest-search": {
+        "question": "Wo willst du parken?",
+        "reserve": "Parkplatz reservieren",
+        "reserve_success": "Reservierung erfolgreich!",
+        "reserve_error": "Bei der Reservierung ist ein Fehler aufgetreten. Versuchen sie es erneut.",
+        "labels": {
+            "destination": "Ziel",
+            "radius": "Umkreis wählen",
+            "type": "Parkplatztyp wählen",
+            "from": "Ab",
+            "until": "Bis",
+            "EV": "Elektrofahrzeug",
+            "plugtype": "Steckertyp wählen",
+            "plugnote": "Wenn dein Steckertyp nicht aufgeführt ist, bieten wir derzeit keine kompatiblen Parkplätze an."
+        },
+        "errors": {
+            "destination": "Ziel ist erforderlich.",
+            "radius": "Umkreis ist erforderlich.",
+            "plugtype": "Steckertyp ist erforderlich."
+        },
+        "buttons": {
+            "submit": "Suchen",
+            "reserve": "Parkplatz reservieren",
+            "reserve_now": "Jetzt reservieren",
+            "cancel": "Abbrechen"
+        },
+        "bookings": {
+            "dialog": {
+                "title": "Buchungsübersicht"
+            }
+        }
+    }
+}

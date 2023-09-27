@@ -1,0 +1,51 @@
+stages:
+  - build
+  - register
+  - deploy
+
+variables:
+    DOCKER_IMAGE_REF: "$CI_REGISTRY/$DOCKER_IMAGE_PREFIX/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG"
+
+# Build the image.
+build_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -f "./$COMMAND_SUBDIR/gitlab-ci.Dockerfile" -t $DOCKER_IMAGE_REF .
+  only:
+    - main
+    - development
+
+# Push the image to the SEELAB docker registry.
+push_to_registry:
+  stage: register
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login --username "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
+  script:
+    - docker push $DOCKER_IMAGE_REF
+  only:
+    - main
+    - development
+
+# Trigger "puls-platform/build" to pull and redeploy the new image on the VM.
+# !!! Is only done for main !!!
+deploy_service:
+  stage: deploy
+  image: curlimages/curl:latest
+  # The '>' folds the whole script into one line (see https://docs.gitlab.com/ee/ci/yaml/#multi-line-commands).
+  script:
+    - >
+      curl -X POST
+      -F "token=$TRIGGER_PULS_PLATFORM_TOKEN"
+      -F "ref=$CI_COMMIT_REF_SLUG"
+      -F "variables[CALLER_DOCKER_IMAGE_NAME]=$CI_REGISTRY/$DOCKER_IMAGE_PREFIX/$CI_PROJECT_NAME:$CI_COMMIT_BRANCH"
+      -F "variables[CALLER_PROJECT_NAME]=$CI_PROJECT_NAME"
+      -F "variables[CALLER_BRANCH]=$CI_COMMIT_REF_NAME"
+      $TRIGGER_PULS_PLATFORM_URL
+  only:
+  - main

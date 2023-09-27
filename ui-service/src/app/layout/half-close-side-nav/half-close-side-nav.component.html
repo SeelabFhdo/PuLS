@@ -1,0 +1,31 @@
+<ng-container *transloco="let t">
+
+<div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" class="side-nav">
+  <mat-nav-list>
+    <mat-list-item>
+      <span class="side-nav-item">
+        <mat-icon mat-list-icon *ngIf="!autoExpand" (click)="toggle()">menu</mat-icon>
+      </span>
+    </mat-list-item>
+    <mat-list-item
+      class="list-item"
+      *ngFor="let item of items; let i=index"
+      [class.selected]="(i === selectedIndex)"
+      (click)="onItemSelected(i)"
+      [routerLink]="item.routerLink">
+        <span class="side-nav-item">
+            <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
+        </span>
+        <span
+          class="side-nav-item side-nav-item-text"
+          *ngIf="isAlwaysExpanded || isOpened"
+          [@inOutAnimation] 
+          (@inOutAnimation.done)="onAnimationEvent()"
+          >
+            &nbsp;{{ t(item.label) }}
+        </span>
+    </mat-list-item>
+  </mat-nav-list>
+</div>
+
+</ng-container>

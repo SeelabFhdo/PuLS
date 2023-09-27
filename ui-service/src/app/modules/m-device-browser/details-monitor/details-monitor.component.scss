@@ -1,0 +1,28 @@
+@import 'src/app/styles/variables';
+
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    border-bottom: $lightborder;
+    margin: 0 1rem;
+  
+    .item {
+      margin: 1rem 0;
+      padding: 0 1rem;
+      border-right: $lightborder;
+      text-align: center;
+  
+      &:last-of-type {
+        border-right: none;
+      }
+    }
+  
+    &:last-of-type {
+      border-bottom: none;
+    }
+  
+    .left {
+      text-align: left;
+    }
+  }

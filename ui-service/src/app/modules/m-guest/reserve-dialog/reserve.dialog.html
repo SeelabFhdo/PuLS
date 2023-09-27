@@ -1,0 +1,67 @@
+<ng-container *transloco="let t">
+
+    <div class="title">
+        <span class="mat-display-2">{{t('guest-search.reserve')}}</span>
+    </div>
+
+    <!--
+    <button (click)="onCancel()"
+    mat-flat-button color="accent" style="margin-top: 4%;">
+        {{t('guest-search.buttons.cancel')}}
+    </button>
+    -->
+
+    <div style="width: 100%; margin-top: 3%;">
+        <mat-chip-list aria-label="Spot details">
+            <mat-chip><mat-icon>electric_car</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.chargingType | titlecase}}</mat-chip>
+            <mat-chip><mat-icon>electrical_services</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.pluginType}}</mat-chip>
+            <mat-chip><mat-icon>crop_free</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.parkingSpaceSize}}</mat-chip>
+            <mat-chip><mat-icon>euro_symbol</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.parkingPricePerHour}}</mat-chip>
+            <mat-chip><mat-icon>euro_symbol</mat-icon> KWh&nbsp;&nbsp;&nbsp;{{spot.chargingPricePerKWH}}</mat-chip>
+        </mat-chip-list>
+        <div *ngIf="spot" class="description" style="margin-top: 3%;">
+            <p>{{spot.description}}</p>
+        </div>
+    </div>
+
+    <div style="border: 1px solid lightgray; border-radius: 3px; padding: 0.5vw;">
+        <div>Für den Zeitraum zwischen {{from}} und {{until}}</div>
+    </div>
+
+    <section class="radio-group-section ">
+        <mat-radio-group disabled [(ngModel)]="spotTypeBooking">
+          <mat-radio-button class="radio-group-margin" value="none">Nur Parkplatz</mat-radio-button>
+          <mat-radio-button class="radio-group-margin" value="electrified">Parkplatz und Ladesäule</mat-radio-button>
+        </mat-radio-group>
+      </section>
+
+    <div style="width: 100%;">
+
+        <button
+        *ngIf="!loading && !success"
+        mat-mini-fab
+        class="back"
+        color="primary"
+        aria-label="Back"
+        (click)="onCancel()"
+        >
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <button *ngIf="!success" (click)="onReserveNow()"
+        [class.spinner]="loading" 
+        [disabled]="loading"
+        mat-flat-button color="accent" style="margin-top: 4%;">
+            {{t('guest-search.buttons.reserve_now')}}
+        </button>
+
+        <div *ngIf="success" class="reserve-success">
+            {{t('guest-search.reserve_success')}}
+        </div>
+
+        <div *ngIf="error" class="reserve-error">
+            {{t('guest-search.reserve_error')}}
+        </div>
+    </div>
+
+</ng-container>

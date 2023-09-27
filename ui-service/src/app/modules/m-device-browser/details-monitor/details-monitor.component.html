@@ -1,0 +1,172 @@
+<ng-container *transloco="let t">
+
+<mat-tab-group
+  [selectedIndex]="0"
+>
+  <ng-container *ngFor="let paramFilterTab of $.paramFilterTabs(deviceType)">
+
+    <div *ngIf="deviceType == 'psu'">
+      <mat-tab *ngIf="data.sensors.length">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">
+            {{paramFilterTab.icon}}
+          </mat-icon>
+          &nbsp; {{t(paramFilterTab.label)}}
+        </ng-template>
+        <ng-template matTabContent>
+          <div *ngIf="paramFilterTab.context == 'psuMonitor'">
+            
+            <ng-template ngFor let-item [ngForOf]="data.sensors">
+              <sensor-value-chart-component
+                [label]="item.type"
+                [unit]="$.getSensorInfoHardCoded(item.type).unit"
+                [values]="item.values"
+                [min]="$.getSensorInfoHardCoded(item.type).min"
+                [max]="$.getSensorInfoHardCoded(item.type).max"
+                [chartFontSize]="12"
+              ></sensor-value-chart-component>
+            </ng-template>
+
+          </div>
+        </ng-template>
+      </mat-tab>
+    </div>
+
+    <div *ngIf="deviceType == 'ev'">
+      <mat-tab *ngIf="data.device">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">
+            {{paramFilterTab.icon}}
+          </mat-icon>
+          &nbsp; {{t(paramFilterTab.label)}}
+        </ng-template>
+        <ng-template matTabContent>
+          <div *ngIf="paramFilterTab.context == 'evMonitor'">
+
+            <div class="row">
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.id')}}</span>
+                <p>{{data.device.ownerId}}</p>
+              </div>
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.size')}}</span>
+                <p>{{data.device.parkingSpaceSize | titlecase}}</p>
+              </div>
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.price')}}</span>
+                <p>{{data.device.parkingPricePerHour}} €</p>
+              </div>
+              <div class="item left">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.address')}}</span>
+                <p>{{data.device.address}}</p>
+              </div>
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.blocked.label')}}</span>
+                <p>{{data.device.blocked ?
+                  t('device-browser.details-monitor.ev.overviewPanels.blocked.yes') :
+                  t('device-browser.details-monitor.ev.overviewPanels.blocked.no')}}</p>
+              </div>
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.offered.label')}}</span>
+                <p>{{data.device.offered ?
+                  t('device-browser.details-monitor.ev.overviewPanels.offered.yes') :
+                  t('device-browser.details-monitor.ev.overviewPanels.offered.no')}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div *ngIf="data.device.pluginType" class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.evStationDetails.label')}}</span>
+                <div class="row">
+                  <div class="item">
+                    <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.evStationDetails.priceKw')}}</span>
+                    <p>{{data.device.chargingPricePerKWH}} €</p>
+                  </div>
+                  <div class="item">
+                    <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.evStationDetails.type')}}</span>
+                    <p>{{data.device.chargingType | titlecase}}</p>
+                  </div>
+                  <div class="item">
+                    <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.evStationDetails.plug')}}</span>
+                    <p>{{data.device.pluginType}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <span class="mat-display-3">{{t('device-browser.details-monitor.ev.overviewPanels.availPeriod.label')}}</span>
+                <table
+                  mat-table
+                  [dataSource]="dataSourceAvailabilityInfo"
+                >
+                  <!-- table header -->
+                  <tr
+                  mat-header-row
+                  *matHeaderRowDef="availabilityInfoTableColumns; sticky: true"
+                  ></tr>
+
+                  <!-- table row -->
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: availabilityInfoTableColumns;"
+                    (mouseover)="row.hovered = true"
+                    (mouseout)="row.hovered = false"
+                  ></tr>
+
+                  <!-- Index -->
+                  <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{t('device-browser.details-monitor.ev.overviewPanels.availPeriod.period')}}
+                    </th>
+                    <td mat-cell *matCellDef="let i = index">
+                      {{i + 1}}
+                    </td>
+                  </ng-container>
+
+                  <!-- From -->
+                  <ng-container matColumnDef="from">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{t('device-browser.details-monitor.ev.overviewPanels.availPeriod.from')}}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{deviceBrowserListService.splitLocaleString(row.start,
+                      -1)}}
+                    </td>
+                  </ng-container>
+
+                  <!-- To -->
+                  <ng-container matColumnDef="to">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{t('device-browser.details-monitor.ev.overviewPanels.availPeriod.to')}}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{deviceBrowserListService.splitLocaleString(row.end,
+                      -1)}}
+                    </td>
+                  </ng-container>
+                </table>
+                <mat-paginator
+                  #availabilityInfoTablePaginator
+                  class="availabilityInfoTablePaginator"
+                  [pageSize]="10"
+                  [pageSizeOptions]="[5, 10, 15]"
+                  showFirstLastButtons
+                ></mat-paginator>
+              </div>
+
+            </div>
+          </div>
+
+          <div *ngIf="paramFilterTab.context == 'evStatistics'">
+            <!-- show charging status only if it is a ev parking space (determined by an available plugin type) -->
+            <div *ngIf="data.device.pluginType">
+              <statistics-sub-component stationId="{{data.device.chargingStationId}}"></statistics-sub-component>
+            </div>
+          </div>
+
+        </ng-template>
+      </mat-tab>
+    </div>
+
+  </ng-container>
+</mat-tab-group>
+
+</ng-container>

@@ -1,0 +1,86 @@
+<div class="componentContainer">
+  <mat-toolbar color="accent">
+    <span class="mat-display-1">{{platformTitle}} Web Interface</span>
+    <span class="mat-display-2">Request an Account</span>
+  </mat-toolbar>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <label for="email" class="sr-only">Email</label>
+    <input
+      matInput
+      type="text"
+      placeholder="Email"
+      id="email"
+      formControlName="email"
+      [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+    />
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required">Email is required</div>
+    </div>
+
+    <label for="firstName" class="sr-only">First Name</label>
+    <input
+      matInput
+      placeholder="First Name"
+      type="text"
+      id="firstName"
+      formControlName="firstName"
+      [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+    />
+    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+      <div *ngIf="f.firstName.errors.required">First Name is required</div>
+    </div>
+
+    <label for="lastName" class="sr-only">Last Name</label>
+    <input
+      matInput
+      placeholder="Last Name"
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+      [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+    />
+    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+    </div>
+
+    <label for="password" class="sr-only">Password</label>
+    <input
+      matInput
+      placeholder="Password"
+      type="password"
+      id="password"
+      formControlName="password"
+      [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+    />
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">Password is required</div>
+    </div>
+
+    <label for="passwordConfirm" class="sr-only">Password Confirm</label>
+    <input
+      matInput
+      placeholder="Confirm Password"
+      type="password"
+      id="passwordConfirm"
+      formControlName="passwordConfirm"
+      [ngClass]="{ 'is-invalid': submitted && f.passwordConfirm.errors }"
+    />
+    <div
+      *ngIf="submitted && f.passwordConfirm.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.passwordConfirm.errors.required">
+        Please reenter your password
+      </div>
+    </div>
+
+    <a routerLink="/login" class="btn btn-link">Login</a>
+    <button mat-flat-button color="accent" [disabled]="loading" class="btn btn-primary">
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
+      Request Account
+    </button>
+  </form>
+</div>

@@ -1,0 +1,60 @@
+version: '2'
+
+networks:
+  puls-net:
+    driver: bridge
+
+services:
+  mariadb:
+    image: puls/mariadb
+    networks:
+      - puls-net
+    ports:
+      - '3306:3306'
+    container_name: mariadb
+    restart: on-failure
+    volumes:
+      - /opt/puls/mariadb:/var/lib/mysql
+
+  zookeeper-server:
+    image: 'bitnami/zookeeper:latest'
+    networks:
+      - puls-net
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka-server1:
+    image: 'bitnami/kafka:latest'
+    networks:
+      - puls-net
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server1:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+    depends_on:
+      - zookeeper-server
+
+  user-management-service-command:
+    image: 'puls/user-management-service-command'
+    networks:
+      - puls-net
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mariadb
+      - kafka-server1
+
+  user-management-service-query:
+    image: 'puls/user-management-service-query'
+    networks:
+      - puls-net
+    ports:
+      - '8081:8081'
+    depends_on:
+      - mariadb
+      - kafka-server1

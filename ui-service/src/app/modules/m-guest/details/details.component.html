@@ -1,0 +1,55 @@
+<ng-container *transloco="let t">
+    <div>
+        <div class="title">
+            <span *ngIf="spot" class="name mat-display-3">
+                <mat-icon (click)="goBack()">keyboard_backspace</mat-icon>
+                {{spot.name}}
+            </span>
+            <mat-icon (click)="toggleFavorite()">
+                <ng-container *ngIf="!favorited">
+                    star_border
+                </ng-container>
+                <ng-container *ngIf="favorited">
+                    star
+                </ng-container>
+            </mat-icon>
+        </div>
+        <img src="assets/graphics/defaultWirelane.jpg" />
+        <div *ngIf="spot && spot.chargingType" class="details">
+            <!--
+            <mat-icon>electric_car</mat-icon>{{spot.chargingType | titlecase}}
+            <mat-icon>electrical_services</mat-icon>{{spot.pluginType}}
+            -->
+            <div style="width: 100%; margin-left: 10%; margin-top: 4%;">
+                <mat-chip-list aria-label="Spot details">
+                    <mat-chip><mat-icon>electric_car</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.chargingType | titlecase}}</mat-chip>
+                    <mat-chip><mat-icon>electrical_services</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.pluginType}}</mat-chip>
+                    <mat-chip><mat-icon>crop_free</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.parkingSpaceSize}}</mat-chip>
+                    <mat-chip><mat-icon>euro_symbol</mat-icon>&nbsp;&nbsp;&nbsp;{{spot.parkingPricePerHour}}</mat-chip>
+                </mat-chip-list>
+                <div *ngIf="spot" class="description" style="margin-top: 4%;">
+                    <p>{{spot.description}}</p>
+                </div>
+                <button (click)="onReserveSpot()" mat-flat-button color="accent" style="margin-top: 4%;">
+                    {{t('guest-search.buttons.reserve')}}
+                </button>
+            </div>
+        </div>
+
+        <!--
+        <div *ngIf="spot" class="description">
+            {{spot.description}}
+        </div>
+        <div class="owner">
+
+        </div>
+        <div class="time-form">
+
+        </div>
+        <span class="price"></span>
+        <button mat-flat-button color="accent">
+            Reserve spot
+        </button>
+        -->
+    </div>
+</ng-container>
